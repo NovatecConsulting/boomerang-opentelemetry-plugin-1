@@ -33,6 +33,8 @@ if (currentEntriesFn) {
   Array.prototype.entries = currentEntriesFn;
 }
 
+let beaconContextMap = new Map();
+
 /**
  * Skeleton template for all boomerang plugins.
  *
@@ -81,13 +83,27 @@ if (currentEntriesFn) {
       // Unless your code will explicitly be called by the developer
       // or by another plugin, you must to do this.
 
+      const includeBeaconTags = impl.getProps().includeBeaconTags
+      if (includeBeaconTags == true) {
+        window.BOOMR.subscribe('before_beacon', function(beaconContext: { [s: string]: any; } | ArrayLike<any>) {
+          beaconContextMap = new Map(Object.entries(beaconContext))
+          impl.setBeaconContextMap(beaconContextMap);
+
+          console.log("beaconContext Test: ", beaconContextMap)
+          beaconContextMap = new Map();
+        });
+      }
+
+
+
+
       return this;
     },
 
     // Executes the specified function within the context of the given span
     withSpan: impl.withSpan,
 
-    // Getting an OpenTelemetry tracer instace for manual tracing
+    // Getting an OpenTelemetry tracer instance for manual tracing
     getTracer: impl.getTracer,
 
     // Returns the internally used OpenTelemetry API

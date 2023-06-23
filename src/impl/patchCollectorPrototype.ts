@@ -3,12 +3,12 @@
  * of the OpenTelemetry Collector span exporter. We adapted some methods/functions in order to solve the following problems:
  * <>
  * The original exporter is using the `Array.from` method which is overridden by Prototype. The Prototype's function does not provide
- * all functionallity of the original function, thus, the exporter will fail exporting spans in case Prototype is used.
+ * all functionality of the original function, thus, the exporter will fail exporting spans in case Prototype is used.
  * See: https://github.com/prototypejs/prototype/issues/338
  * <>
  * The original exporter is using the `JSON.stringify` method. This method is calling `toJSON` functions on the object to serialize.
- * Unfortuently, prototype is adding a `toJSON` method to the Array class in versions prior 1.7. This leads to the problem, that nested
- * arrays are stringified seperatly, thus, they are considered not as an array anymore but as a string resulting in a invalid JSON string.
+ * Unfortunately, prototype is adding a `toJSON` method to the Array class in versions prior 1.7. This leads to the problem, that nested
+ * arrays are stringified separately, thus, they are considered not as an array anymore but as a string resulting in a invalid JSON string.
  * See: https://stackoverflow.com/questions/29637962/json-stringify-turned-the-value-array-into-a-string/29638420#29638420
  * <>
  * In this file, a exporter can be patched using the `patchExporter` function, so the previously described problems are "solved".

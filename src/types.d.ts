@@ -12,6 +12,7 @@ export interface PluginProperties {
   corsUrls: PropagateTraceHeaderCorsUrls;
   collectorConfiguration: CollectorExporterNodeConfigBase | undefined;
   consoleOnly: boolean;
+  includeBeaconTags: boolean;
   plugins: OTPluginProperties;
   plugins_config: OTPluginConfig;
   exporter: OTExportProperties;
